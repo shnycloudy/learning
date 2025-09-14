@@ -1,6 +1,3 @@
-/* File: src/components/Product.css */
-
-/* General Layout */
 .product-section {
   padding: 20px;
   font-family: sans-serif;
@@ -14,7 +11,6 @@
   color: #333;
 }
 
-/* Product Controls */
 .product-controls {
   display: flex;
   justify-content: space-between;
@@ -54,8 +50,8 @@
 }
 
 .stat-item {
-  background: #f1f1f1;
-  color: #333;
+  background: #B88E2F;
+  color: #ffffff;
   padding: 8px 16px;
   border-radius: 20px;
   font-size: 14px;
@@ -75,7 +71,7 @@
   transform: scale(1.05);
 }
 
-/* Products Grid */
+
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -106,7 +102,7 @@
   display: block;
 }
 
-/* Overlay & Actions */
+
 .overlay {
   position: absolute;
   top: 0;
@@ -152,7 +148,7 @@
 .overlay-actions span.liked { color: #e74c3c; }
 .overlay-actions span.active { color: #B88E2F; }
 
-/* Product Info */
+
 .product-info {
   padding: 20px;
 }
@@ -161,7 +157,7 @@
 .price { font-weight: bold; color: #333; margin-top: 10px; }
 .old-price { text-decoration: line-through; color: #999; margin-left: 10px; font-weight: normal; }
 
-/* CSS untuk Pop-up Keranjang Belanja */
+
 .cart-overlay {
   position: fixed;
   top: 0;
@@ -175,13 +171,14 @@
   align-items: center;
 }
 
-.cart-popup {
-  background: rgb(209, 174, 174);
+.cart-overlay .cart-popup{
+  background: rgb(187, 156, 156); 
   padding: 25px;
   border-radius: 12px;
   width: 90%;
   max-width: 550px;
   box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+  z-index: 1001;
 }
 
 .cart-popup-header {
@@ -189,7 +186,7 @@
   justify-content: space-between;
   align-items: center;
   padding-bottom: 15px;
-  border-bottom: 1px solid #eaeaea;
+  border-bottom: 1px solid #ffffff;
   margin-bottom: 15px;
 }
 .cart-popup-header h3 { margin: 0; }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import './Product.css'; // <-- (1) MENGIMPOR FILE CSS BARU
-import { FaShareAlt, FaBalanceScale, FaHeart } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom'; // untuk pindah halaman
+import './Product.css';
+import { FaShareAlt, FaBalanceScale, FaHeart, FaShoppingCart } from "react-icons/fa";
 import CartPopup from './CartPopup';
 
 import img1 from '../assets/product/product1.png';
@@ -23,14 +24,16 @@ const allProducts = [
   { id: 8, name: "Potty", desc: "Minimalist flower pot", price: 500000, tag: "New", image: img8, category: "accessories" },
 ];
 
+
 const formatCurrency = (num) => "Rp " + num.toLocaleString("id-ID");
 
-const Product = () => {
+const Product = ({ cart, addToCart }) => {
+  const navigate = useNavigate(); // Hook untuk navigasi
+
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [cart, setCart] = useState([]);
   const [likedProducts, setLikedProducts] = useState([]);
   const [compareList, setCompareList] = useState([]);
   const [visibleProducts, setVisibleProducts] = useState(8);
@@ -53,20 +56,11 @@ const Product = () => {
     .slice(0, visibleProducts);
 
   const categories = ["all", ...new Set(products.map(product => product.category))];
-
-  const addToCart = (product) => {
-    const existingItem = cart.find(item => item.id === product.id);
-    if (existingItem) {
-      setCart(cart.map(item => item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item));
-    } else {
-      setCart([...cart, { ...product, quantity: 1 }]);
-    }
-  };
-
+  
   const toggleLike = (productId) => {
     setLikedProducts(prev => prev.includes(productId) ? prev.filter(id => id !== productId) : [...prev, productId]);
   };
-
+  
   const toggleCompare = (product) => {
     const isInCompare = compareList.some(item => item.id === product.id);
     if (isInCompare) {
@@ -80,6 +74,11 @@ const Product = () => {
 
   const toggleCartPopup = () => {
     setIsCartOpen(!isCartOpen);
+  };
+
+  const handleCheckout = () => {
+    setIsCartOpen(false); 
+    navigate('/checkout'); 
   };
 
   const totalCartItems = cart.reduce((total, item) => total + item.quantity, 0);
@@ -104,9 +103,8 @@ const Product = () => {
           </select>
         </div>
         <div className="stats-container">
-          <button className="stat-item cart-button" onClick={toggleCartPopup}>Cart: {totalCartItems} items</button>
-          <div className="stat-item">Liked: {likedProducts.length}</div>
-          <div className="stat-item">Compare: {compareList.length}/3</div>
+          <button className="stat-item cart-button" onClick={toggleCartPopup}><FaShoppingCart /> {totalCartItems} items</button>
+          <div className="stat-item"><FaHeart /> {likedProducts.length} </div>
         </div>
       </div>
 
@@ -122,9 +120,6 @@ const Product = () => {
                 <button className="btn-cart" onClick={() => addToCart(item)}>Add to cart</button>
                 <div className="overlay-actions">
                   <span><FaShareAlt /> Share</span>
-                  <span onClick={() => toggleCompare(item)} className={compareList.some(p => p.id === item.id) ? "active" : ""}>
-                    <FaBalanceScale /> Compare
-                  </span>
                   <span onClick={() => toggleLike(item.id)} className={likedProducts.includes(item.id) ? "liked" : ""}>
                     <FaHeart /> Like
                   </span>
@@ -143,9 +138,9 @@ const Product = () => {
         ))}
       </div>
       
-      {isCartOpen && <CartPopup items={cart} onClose={toggleCartPopup} />}
+      {/* kirim handleCheckout ke CartPopup */}
+      {isCartOpen && <CartPopup items={cart} onClose={toggleCartPopup} onCheckout={handleCheckout} />}
       
-      {/* (2) BLOK <style jsx> SUDAH DIHAPUS DARI SINI */}
     </section>
   );
 };

@@ -1,4 +1,4 @@
-import { FaUser, FaSearch, FaHeart, FaShoppingCart } from 'react-icons/fa';
+import { FaUser } from 'react-icons/fa';
 import logo from '../assets/logo.png';
 
 function Header() {
@@ -17,9 +17,6 @@ function Header() {
 
       <div className="nav-icons">
         <FaUser />
-        <FaSearch />
-        <FaHeart />
-        <FaShoppingCart />
       </div>
     </header>
   );
